@@ -8,6 +8,8 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.remember
 import androidx.compose.material3.Surface
+import com.example.quitsmoking.network.RetrofitClient
+import com.example.quitsmoking.network.ApiService
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -31,11 +33,17 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             QuitSmokingAppTheme {
+
+                val apiService: ApiService = remember {
+                    RetrofitClient.api
+
+                }
+
                 val userId = remember { 3 }
+
                 Surface(color = MaterialTheme.colorScheme.background) {
                     val navController = rememberNavController()
                     NavHost(
-
                         navController = navController,
                         startDestination = "splash"
                     ) {
@@ -215,14 +223,19 @@ class MainActivity : ComponentActivity() {
                         }
                         // ---------- AI ----------
                         composable("ai_chat") {
-                            com.example.quitsmoking.screens.ai.AIChatScreen(onBack = { navController.navigateUp() })
+                            com.example.quitsmoking.screens.ai.AIChatScreen(
+                                onBack = { navController.navigateUp() },
+                                apiService = apiService
+                            )
                         }
+
                         composable("ai_notification_settings") {
                             com.example.quitsmoking.screens.ai.NotificationScreen(navController)
                         }
                         composable("notifications") {
                             com.example.quitsmoking.screens.ai.NotificationsScreen(navController)
                         }
+
                         composable("personalized_tips") {
                             com.example.quitsmoking.screens.ai.PersonalizedTipsScreen(navController)
                         }

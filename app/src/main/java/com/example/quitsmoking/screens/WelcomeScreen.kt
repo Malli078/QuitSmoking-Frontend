@@ -131,7 +131,7 @@ fun WelcomeScreen(navController: NavController) {
         ) {
 
             Button(
-                onClick = { navController.navigate("why_quit") },
+                onClick = { navController.navigate("create_account") },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(52.dp),

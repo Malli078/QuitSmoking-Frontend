@@ -13,21 +13,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Coffee
-import androidx.compose.material.icons.filled.WineBar
-import androidx.compose.material.icons.filled.Groups
-import androidx.compose.material.icons.filled.MoodBad
-import androidx.compose.material.icons.filled.DirectionsCar
-import androidx.compose.material.icons.filled.AccessTime
-import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.*
 
 @Composable
 fun TriggerIdentificationScreen(navController: NavController) {
 
-    // Store selected triggers
     var selectedTriggers by remember { mutableStateOf(listOf<String>()) }
 
-    // Each trigger item
     data class Trigger(
         val id: String,
         val label: String,
@@ -50,35 +42,46 @@ fun TriggerIdentificationScreen(navController: NavController) {
             .background(Color.White)
     ) {
 
-        // HEADER
+        // ---------- HEADER ----------
         Column(modifier = Modifier.padding(start = 20.dp, end = 20.dp, top = 40.dp)) {
-            Text("Step 3 of 4", color = Color(0xFF0D9488), fontSize = 16.sp)
-            Spacer(modifier = Modifier.height(6.dp))
-            Text("Identify Your Triggers", color = Color.Black, fontSize = 24.sp)
-            Spacer(modifier = Modifier.height(6.dp))
-            Text("When do you typically smoke?", color = Color.Gray, fontSize = 14.sp)
+            Text(
+                "Step 3 of 4",
+                fontSize = 16.sp,
+                color = Color.Black
+            )
+            Spacer(Modifier.height(6.dp))
+            Text(
+                "Identify Your Triggers",
+                fontSize = 24.sp,
+                color = Color.Black
+            )
+            Spacer(Modifier.height(6.dp))
+            Text(
+                "When do you typically smoke?",
+                fontSize = 14.sp,
+                color = Color.Black
+            )
         }
 
-        Spacer(modifier = Modifier.height(20.dp))
+        Spacer(Modifier.height(20.dp))
 
-        // PROGRESS BAR
+        // ---------- PROGRESS ----------
         LinearProgressIndicator(
             progress = 0.75f,
             modifier = Modifier
                 .padding(horizontal = 20.dp)
                 .fillMaxWidth(),
-            color = Color(0xFF0D9488)
+            color = Color.Black
         )
 
-        Spacer(modifier = Modifier.height(20.dp))
+        Spacer(Modifier.height(20.dp))
 
-        // TRIGGER LIST
+        // ---------- TRIGGERS ----------
         Column(
             modifier = Modifier
                 .weight(1f)
                 .padding(horizontal = 20.dp)
         ) {
-
             triggers.forEach { trigger ->
                 val isSelected = selectedTriggers.contains(trigger.id)
 
@@ -99,7 +102,7 @@ fun TriggerIdentificationScreen(navController: NavController) {
                     verticalAlignment = Alignment.CenterVertically
                 ) {
 
-                    // ICON BOX
+                    // Icon box
                     Box(
                         modifier = Modifier
                             .size(50.dp)
@@ -107,15 +110,15 @@ fun TriggerIdentificationScreen(navController: NavController) {
                         contentAlignment = Alignment.Center
                     ) {
                         Icon(
-                            imageVector = trigger.icon,
+                            trigger.icon,
                             contentDescription = null,
                             tint = Color.Black
                         )
                     }
 
-                    Spacer(modifier = Modifier.width(16.dp))
+                    Spacer(Modifier.width(16.dp))
 
-                    // LABEL TEXT
+                    // Label
                     Text(
                         trigger.label,
                         modifier = Modifier.weight(1f),
@@ -123,12 +126,12 @@ fun TriggerIdentificationScreen(navController: NavController) {
                         color = Color.Black
                     )
 
-                    // CHECKMARK
+                    // Checkmark
                     if (isSelected) {
                         Box(
                             modifier = Modifier
                                 .size(22.dp)
-                                .background(Color(0xFF0D9488), RoundedCornerShape(50)),
+                                .background(Color.Black, RoundedCornerShape(50)),
                             contentAlignment = Alignment.Center
                         ) {
                             Icon(
@@ -143,39 +146,39 @@ fun TriggerIdentificationScreen(navController: NavController) {
             }
         }
 
-        // BOTTOM INFO BOX
+        // ---------- INFO ----------
         Box(
             modifier = Modifier
                 .padding(horizontal = 20.dp, vertical = 10.dp)
-                .background(Color(0xFFDDEAFF), RoundedCornerShape(12.dp))
+                .background(Color(0xFFE5E7EB), RoundedCornerShape(12.dp))
                 .padding(14.dp)
         ) {
             Text(
                 "We'll help you prepare for these situations with personalized strategies",
-                color = Color(0xFF1E3A8A),
+                color = Color.Black,
                 fontSize = 14.sp
             )
         }
 
-        // CONTINUE BUTTON
+        // ---------- CONTINUE ----------
         Button(
             onClick = {
-                navController.navigate("create_account")
+                navController.navigate("home") {
+                    popUpTo("triggers") { inclusive = true }
+                }
             },
             enabled = selectedTriggers.isNotEmpty(),
             modifier = Modifier
                 .padding(20.dp)
                 .fillMaxWidth(),
             colors = ButtonDefaults.buttonColors(
-                containerColor = if (selectedTriggers.isNotEmpty())
-                    Color(0xFF0D9488)
-                else Color(0xFFE5E7EB)
+                containerColor = Color.Black
             ),
             shape = RoundedCornerShape(18.dp)
         ) {
             Text(
                 "Continue",
-                color = if (selectedTriggers.isNotEmpty()) Color.White else Color.Gray,
+                color = Color.White,
                 fontSize = 16.sp
             )
         }

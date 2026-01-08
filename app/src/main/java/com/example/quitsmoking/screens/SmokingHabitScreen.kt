@@ -30,14 +30,20 @@ fun SmokingHabitScreen(navController: NavController) {
             .background(Color.White)
     ) {
 
-        // Header
+        // ---------- HEADER ----------
         Column(modifier = Modifier.padding(20.dp)) {
             Text("Step 2 of 4", color = Color(0xFF0F766E))
-            Text("Your Smoking Habit", style = MaterialTheme.typography.headlineMedium)
-            Text("Help us understand your current smoking pattern", color = Color.Gray)
+            Text(
+                "Your Smoking Habit",
+                style = MaterialTheme.typography.headlineMedium
+            )
+            Text(
+                "Help us understand your current smoking pattern",
+                color = Color.Gray
+            )
         }
 
-        // Progress bar
+        // ---------- PROGRESS ----------
         LinearProgressIndicator(
             progress = 0.50f,
             modifier = Modifier
@@ -48,44 +54,50 @@ fun SmokingHabitScreen(navController: NavController) {
 
         Spacer(Modifier.height(20.dp))
 
-        // Main content scroll
+        // ---------- CONTENT ----------
         Column(
             modifier = Modifier
                 .weight(1f)
-                .padding(horizontal = 20.dp)
-                .padding(bottom = 20.dp),
+                .padding(horizontal = 20.dp),
             verticalArrangement = Arrangement.spacedBy(20.dp)
         ) {
 
-            // --- Cigarettes Per Day ---
+            // Cigarettes per day
             HabitBox(
                 title = "Cigarettes per day",
                 value = cigarettesPerDay.toString(),
                 minus = { cigarettesPerDay = adjustValue(cigarettesPerDay, -1) },
                 plus = { cigarettesPerDay = adjustValue(cigarettesPerDay, 1) },
-                gradient = Brush.linearGradient(listOf(Color(0xFFE0F7F9), Color(0xFFD2F5F4)))
+                gradient = Brush.linearGradient(
+                    listOf(Color(0xFFE0F7F9), Color(0xFFD2F5F4))
+                )
             )
 
-            // --- Cost Per Pack ---
+            // Cost per pack (NO currency symbol)
             HabitBox(
-                title = "Cost per pack (\$)",
-                value = "$$costPerPack",
+                title = "Cost per pack",
+                value = costPerPack.toString(),
                 minus = { costPerPack = adjustValue(costPerPack, -1) },
                 plus = { costPerPack = adjustValue(costPerPack, 1) },
-                gradient = Brush.linearGradient(listOf(Color(0xFFDFF7E5), Color(0xFFCEFAE1)))
+                gradient = Brush.linearGradient(
+                    listOf(Color(0xFFDFF7E5), Color(0xFFCEFAE1))
+                )
             )
 
-            // --- Cigarettes per Pack ---
+            // Cigarettes per pack
             HabitBox(
                 title = "Cigarettes per pack",
                 value = cigarettesPerPack.toString(),
                 minus = { cigarettesPerPack = adjustValue(cigarettesPerPack, -1) },
                 plus = { cigarettesPerPack = adjustValue(cigarettesPerPack, 1) },
-                gradient = Brush.linearGradient(listOf(Color(0xFFE8F3FF), Color(0xFFD8F3FF)))
+                gradient = Brush.linearGradient(
+                    listOf(Color(0xFFE8F3FF), Color(0xFFD8F3FF))
+                )
             )
 
-            // --- Daily Cost Estimate ---
-            val dailyCost = (costPerPack.toFloat() / cigarettesPerPack.toFloat()) * cigarettesPerDay
+            // ---------- DAILY COST ----------
+            val dailyCost =
+                (costPerPack.toFloat() / cigarettesPerPack.toFloat()) * cigarettesPerDay
 
             Box(
                 modifier = Modifier
@@ -100,9 +112,12 @@ fun SmokingHabitScreen(navController: NavController) {
                 contentAlignment = Alignment.Center
             ) {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    Text("Your daily cost", color = Color.White.copy(alpha = 0.8f))
                     Text(
-                        "\$${String.format("%.2f", dailyCost)}",
+                        "Your daily cost",
+                        color = Color.White.copy(alpha = 0.8f)
+                    )
+                    Text(
+                        String.format("%.2f", dailyCost),
                         color = Color.White,
                         fontWeight = FontWeight.Bold
                     )
@@ -110,12 +125,12 @@ fun SmokingHabitScreen(navController: NavController) {
             }
         }
 
-        // Continue Button
+        // ---------- CONTINUE ----------
         Button(
             onClick = { navController.navigate("triggers") },
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 20.dp, vertical = 20.dp),
+                .padding(20.dp),
             colors = ButtonDefaults.buttonColors(
                 containerColor = Color(0xFF0F766E)
             ),
@@ -150,13 +165,14 @@ fun HabitBox(
                 verticalAlignment = Alignment.CenterVertically
             ) {
 
-                // Minus Button
                 SmallButton("-", minus)
 
-                // Value
-                Text(value, color = Color(0xFF0D9488))
+                Text(
+                    value,
+                    color = Color(0xFF0D9488),
+                    fontWeight = FontWeight.Bold
+                )
 
-                // Plus Button
                 SmallButton("+", plus)
             }
         }

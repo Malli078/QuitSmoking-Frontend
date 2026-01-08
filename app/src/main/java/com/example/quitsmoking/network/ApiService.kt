@@ -7,30 +7,38 @@ import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Query
 
+/* ================= AI CHAT MODELS ================= */
+
+data class AiChatRequest(
+    val question: String
+)
+
+data class AiChatResponse(
+    val success: Boolean,
+    val reply: String
+)
+
+/* ================= API SERVICE ================= */
+
 interface ApiService {
 
     /* ================= AUTH ================= */
 
-    // 🔑 LOGIN
     @POST("login.php")
     suspend fun login(
         @Body request: LoginRequest
     ): Response<LoginResponse>
 
-    // 🆕 REGISTER
     @POST("register.php")
     suspend fun register(
         @Body request: RegisterRequest
     ): Response<RegisterResponse>
 
-    // 🔐 FORGOT PASSWORD
     @POST("send_otp.php")
     suspend fun forgotPassword(
         @Body request: ForgotPasswordRequest
     ): Response<CommonResponse>
 
-
-    // 🔁 RESET PASSWORD
     @POST("reset_password.php")
     suspend fun resetPassword(
         @Body request: ResetPasswordRequest
@@ -39,13 +47,11 @@ interface ApiService {
 
     /* ================= PROFILE ================= */
 
-    // 👤 GET PROFILE
     @GET("get_profile.php")
     suspend fun getProfile(
         @Query("user_id") userId: Int
     ): Response<GetProfileResponse>
 
-    // ✏️ UPDATE PROFILE
     @POST("update_profile.php")
     suspend fun updateProfile(
         @Body request: UpdateProfileRequest
@@ -106,13 +112,11 @@ interface ApiService {
 
     /* ================= STREAK / PROGRESS ================= */
 
-    // 📅 STREAK CALENDAR (JSON BODY)
     @POST("get_streak_calendar.php")
     suspend fun getStreakCalendar(
         @Body request: CalendarRequest
     ): CalendarResponse
 
-    // 📊 STREAK STATS (JSON BODY)
     @POST("get_streak_stats.php")
     suspend fun getStreakStats(
         @Body request: StatsRequest
@@ -134,13 +138,19 @@ interface ApiService {
 
     /* ================= HELP & SUPPORT ================= */
 
-    // 🆘 GET HELP CONTENT
     @GET("get_help_support.php")
     suspend fun getHelpSupport(): Response<GetHelpResponse>
 
-    // 📨 SUBMIT SUPPORT TICKET
     @POST("submit_support_ticket.php")
     suspend fun submitSupportTicket(
         @Body request: SupportTicketRequest
     ): Response<SupportTicketResponse>
+
+
+    /* ================= 🤖 AI QUIT SMOKING CHAT ================= */
+
+    @POST("quit_smoking_ai.php")
+    suspend fun askAi(
+        @Body request: AiChatRequest
+    ): Response<AiChatResponse>
 }

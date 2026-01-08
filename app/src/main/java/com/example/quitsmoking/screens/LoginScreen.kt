@@ -71,7 +71,7 @@ fun LoginScreen(navController: NavController) {
             }
 
 
-            navController.navigate("home") {
+            navController.navigate("why_quit") {
                 popUpTo("login") { inclusive = true }
             }
             viewModel.success.value = false
@@ -273,6 +273,14 @@ fun LoginScreen(navController: NavController) {
                 }
             }
         }
+        Text(
+            text = "2026 © Powered by SIMATS Engineering",
+            fontSize = 12.sp,
+            color = Color.Black.copy(alpha = 0.6f),
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .padding(bottom = 12.dp)
+        )
     }
 }
 private fun saveUserName(context: Context, name: String) {
