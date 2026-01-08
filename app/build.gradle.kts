@@ -5,13 +5,13 @@ plugins {
 }
 
 android {
-    namespace = "com.example.quitsmoking"
-    compileSdk = 34  // use stable version
+    namespace = "com.simats.quitsmoking"
+    compileSdk = 36  // use stable version
 
     defaultConfig {
-        applicationId = "com.example.quitsmoking"
+        applicationId = "com.simats.quitsmoking"
         minSdk = 24
-        targetSdk = 34
+        targetSdk = 36
         versionCode = 1
         versionName = "1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
